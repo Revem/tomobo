@@ -47,7 +47,7 @@ client.on("message", async (message) => {
     }
 
     if(comando === "help") {
-      const m = await message.channel.send("um segundo");
+      const m = await message.author.send("um segundo");
       m.edit(`\`\`\`Comandos:\n
       t.ping : Mostra o ping\n
       t.nome : Muda meu nome\n
@@ -57,7 +57,8 @@ client.on("message", async (message) => {
       t.leave : saio do canal de voz\n
       t.play : toco musica\n
       t.skip : pulo a música\n
-      t.stop : paro a música \`\`\``)
+      t.stop : paro a música \`\`\``);
+      message.channel.send("Mandei no seu privado, senpai!");
   }
 
     if(comando === "say") {
