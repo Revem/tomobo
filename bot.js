@@ -7,7 +7,8 @@ const dialogflow = require('dialogflow');
 const cortex = require('./cortex.js').cortex;
 const activities_list = [
   `Estou em ${client.guilds.cache.size} servidores no momento!`,
-  `t.play | t.ping`, 
+  `t.play | t.ping`,
+  `t.help | Pra receber a lista de comandos, senpai!`
   ];
 
 var queue = new Map();
@@ -45,10 +46,42 @@ client.on("message", async (message) => {
         m.edit(`Pong! Senpai, a latência é ${m.createdTimestamp - message.createdTimestamp}ms!`)
     }
 
+    if(comando === "help") {
+      const m = await message.channel.send("um segundo");
+      m.edit(`\`\`\`Comandos:\n
+      t.ping : Mostra o ping\n
+      t.nome : Muda meu nome\n
+      t.say : digito uma mensagem sua\n
+      t.mavatar : coloco o link enviado como avatar \n
+      t.join : entro no canal de voz\n
+      t.leave : saio do canal de voz\n
+      t.play : toco musica\n
+      t.skip : pulo a música\n
+      t.stop : paro a música \`\`\``)
+  }
+
     if(comando === "say") {
         const falar = args.join(" ");
         message.delete().catch(O_o=>{});
         message.channel.send(falar);
+    }
+
+    if(comando == "join") {
+      if (message.member.voiceChannel){
+        message.member.voiceChannel.join();
+      }
+      else {
+        message.channel.send("Você não está em nenhum canal de voz!");
+      }
+    }
+
+    if(comando == "leave") {
+      if (message.member.voiceChannel){
+        message.member.voiceChannel.leave();
+      }
+      else {
+        message.channel.send("Você não está em nenhum canal de voz!");
+      }
     }
 
     if(comando === "nome") {
@@ -64,9 +97,14 @@ client.on("message", async (message) => {
     }
 
     if(comando === "mavatar") {
+        if(message.author.id == revem){
         const avatarnovo = args.join(" ");
         message.delete().catch(O_o=>{});
         client.user.setAvatar(avatarnovo);
+        }
+        else {
+          return message.channel.send("Só o Revem-senpai pode fazer isso!")
+        }
     }
 
     if(comando === 'play') {
