@@ -17,7 +17,7 @@ module.exports.cortex = async (message, sessionId) => {
             };
             
             const responses = await sessionClient.detectIntent(request);
-
+"a"
             const result = responses[0].queryResult.fulfillmentText;
             console.log(result)
             resolve(result)
@@ -26,4 +26,4 @@ module.exports.cortex = async (message, sessionId) => {
             return reject('uwu')
         }
     })
-}
+};
